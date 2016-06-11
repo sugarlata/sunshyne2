@@ -37,7 +37,7 @@ import org.json.JSONObject;
  */
 public class ForecastFragment extends Fragment {
 
-    private ArrayAdapter<String> mForecastAdapter;
+    public ArrayAdapter<String> mForecastAdapter;
 
 
     public ForecastFragment() {
@@ -171,17 +171,13 @@ public class ForecastFragment extends Fragment {
 
             }
 
-            for (String s : resultStrs) {
-
-                Log.v(LOG_TAG, "Forecast Entry: " + s);
-            }
             return resultStrs;
 
         }
 
         //Need to go from here below 28-5-16
 
-		@Override
+        @Override
         protected String[] doInBackground(String... params) {
 
             if(params.length==0){
@@ -274,6 +270,21 @@ public class ForecastFragment extends Fragment {
             }
 
             return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            super.onPostExecute(result);
+
+            if (result != null){
+                mForecastAdapter.clear();
+                for (String dayForecastStr : result){
+                    mForecastAdapter.add(dayForecastStr);
+                }
+
+            }
+
 
         }
 
